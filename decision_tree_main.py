@@ -3,12 +3,16 @@ import math
 import copy
 import random
 
+TRAINING_FILE = 'Data/Training_Data.csv'
+VAILDATION_FILE = 'Data/Validation_Data.csv'
+TEST_FILE = 'Data/Test_Data.csv'
+
 """
 Take in data from csvfile and generate 
 a list of dictionaries where each element 
 of the list represents an instance
 """
-def load_data(csvfile, skipcolumns = ['Day']):
+def load_data(csvfile, features=['AIRLINE','ARRIVAL_TIME','DAY_OF_WEEK', 'DEPARTURE_DELAY', 'DEPARTURE_TIME', 'DESTINATION_AVG_WIND', 'DESTINATION_SNOW_CM', 'DISTANCE', 'MONTH', 'ORIGIN_AIRPORT', 'ORIGIN_AVG_VISIBILITY', 'ORIGIN_AVG_WIND', 'ORIGIN_MAX_TEMPERATURE', 'ORIGIN_MIN_TEMPERATURE', 'ORIGIN_SNOW_CM', 'SCHEDULED_TIME', 'WEATHER_DELAY']):
   inputdataset = []
   unstructuredDataset = []
   with open(csvfile, newline='\n') as csvfile:
@@ -22,7 +26,7 @@ def load_data(csvfile, skipcolumns = ['Day']):
   for instance in unstructuredDataset[1:]:
     structuredData = {}
     for idx, val in enumerate(featureList):
-      if val not in skipcolumns:
+      if val in features:
         structuredData[val] = instance[idx]
     inputdataset.append(structuredData)
   
@@ -145,7 +149,6 @@ Get label present more in dataset
 def get_dominant_label(dataset, labelfeature, poslabel='Yes', neglabel='No'):
   labels = [row[labelfeature] for row in dataset]
   return labels.count(poslabel) > labels.count(neglabel)
-
 """
 Run the ID3 decision tree learning algorithm.
 
@@ -318,12 +321,12 @@ def leave_one_out_split(dataset):
 
 
 #load data
-trainingSet = load_data("Congress Data - Training.csv")
-validationSet = load_data("Congress Data - Validation.csv")
-testSet = load_data("Congress Data - Test.csv")
+trainingSet = load_data(TRAINING_FILE)
+validationSet = load_data(VAILDATION_FILE)
+testSet = load_data(TEST_FILE)
 
-labelfeature = 'party'
-labelmapping = {True: 'democrat', False: 'republican'}
+labelfeature = 'DEPARTURE_DELAY'
+labelmapping = {True: 'delayed', False: 'not_delayed'}
 
 """
 # This commented code was created for running limited iterations of ID3 and pruning
@@ -463,7 +466,8 @@ else:
   print('Original data split')
 
   # no folding
-  best_tree = id3(copy.deepcopy(trainingSet), labelfeature, 'democrat', 'republican')
+  best_tree = id3(copy.deepcopy(trainingSet), labelfeature, 'delayed', 'not_delayed')
+
 
   accuracy = accuracy_test(validationSet, best_tree, labelmapping)
   print('\t\tPre-prune Validation Accuracy: {}'.format(accuracy))
@@ -479,6 +483,7 @@ else:
 print("")
 print("Best Tree:")
 print(best_tree)
+
 
 # Run test
 print("")

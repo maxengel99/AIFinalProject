@@ -99,9 +99,9 @@ def continuousToDiscrete(row, featureMap):
 	currentDepartureDelay = int(row[featureMap['DEPARTURE_DELAY']]) if row[featureMap['DEPARTURE_DELAY']] != '' else 0
 	newDepartureDealy = ''
 	if currentDepartureDelay <= 15:
-		newDepartureDealy = False
+		newDepartureDealy = 'on_time'
 	if currentDepartureDelay > 15:
-		newDepartureDealy = True
+		newDepartureDealy = 'delayed'
 	row[featureMap['DEPARTURE_DELAY']] = newDepartureDealy
 
 
@@ -128,10 +128,16 @@ with open('Data/added_weather_fields.csv', 'r') as csvFile, open('Data/Training_
 	for idx,val in enumerate(headers):
 		featureMap[val] = idx
 
+	print(sorted(featureMap))
+
+	delayCount = 0
 
 	for idx,row in enumerate(dataset):
 		continuousToDiscrete(row,featureMap)
+
 		if (idx <= .8 * len(dataset)):
+			if (row[featureMap['DEPARTURE_DELAY']] == 'delayed'):
+				delayCount += 1
 			training_writer.writerow(row)
 		elif (idx <= .9 * len(dataset)):
 			validation_writer.writerow(row)
@@ -139,8 +145,7 @@ with open('Data/added_weather_fields.csv', 'r') as csvFile, open('Data/Training_
 			test_writer.writerow(row)
 
 
-
-
+	print(delayCount)
 
 
 
