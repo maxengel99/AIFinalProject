@@ -12,7 +12,7 @@ Take in data from csvfile and generate
 a list of dictionaries where each element 
 of the list represents an instance
 """
-def load_data(csvfile, features=['AIRLINE','ARRIVAL_TIME','DAY_OF_WEEK', 'DEPARTURE_DELAY', 'DEPARTURE_TIME', 'DESTINATION_AVG_WIND', 'DESTINATION_SNOW_CM', 'DISTANCE', 'MONTH', 'ORIGIN_AIRPORT', 'ORIGIN_AVG_VISIBILITY', 'ORIGIN_AVG_WIND', 'ORIGIN_MAX_TEMPERATURE', 'ORIGIN_MIN_TEMPERATURE', 'ORIGIN_SNOW_CM', 'SCHEDULED_TIME', 'WEATHER_DELAY']):
+def load_data(csvfile, features=['AIRLINE', 'DAY', 'DAY_OF_WEEK', 'DEPARTURE_DELAY',  'DESTINATION_AIRPORT', 'DESTINATION_AVG_VISIBILITY', 'DESTINATION_AVG_WIND', 'DESTINATION_MAX_TEMPERATURE', 'DESTINATION_MIN_TEMPERATURE', 'DESTINATION_SNOW_CM', 'DISTANCE', 'ORIGIN_AVG_VISIBILITY', 'ORIGIN_AVG_WIND', 'ORIGIN_MAX_TEMPERATURE', 'ORIGIN_MIN_TEMPERATURE', 'ORIGIN_SNOW_CM']):
   inputdataset = []
   unstructuredDataset = []
   with open(csvfile, newline='\n') as csvfile:
@@ -187,6 +187,8 @@ def id3(dataset, labelfeature, poslabel='Yes', neglabel='No', ttl = -1):
     
     for key, value in branch_examples.items():
       node[1][key] = id3(value, labelfeature, poslabel, neglabel, ttl - 1)
+      print(node[1][key])
+      print(accuracy_test(validationSet, node[1][key], labelmapping));
     
     return node
 
@@ -326,7 +328,7 @@ validationSet = load_data(VAILDATION_FILE)
 testSet = load_data(TEST_FILE)
 
 labelfeature = 'DEPARTURE_DELAY'
-labelmapping = {True: 'delayed', False: 'not_delayed'}
+labelmapping = {True: 'delayed', False: 'on_time'}
 
 """
 # This commented code was created for running limited iterations of ID3 and pruning
@@ -466,7 +468,7 @@ else:
   print('Original data split')
 
   # no folding
-  best_tree = id3(copy.deepcopy(trainingSet), labelfeature, 'delayed', 'not_delayed')
+  best_tree = id3(copy.deepcopy(trainingSet), labelfeature, 'delayed', 'on_time')
 
 
   accuracy = accuracy_test(validationSet, best_tree, labelmapping)

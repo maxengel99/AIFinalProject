@@ -128,24 +128,28 @@ with open('Data/added_weather_fields.csv', 'r') as csvFile, open('Data/Training_
 	for idx,val in enumerate(headers):
 		featureMap[val] = idx
 
-	print(sorted(featureMap))
+	prunedDataset = []
 
-	delayCount = 0
+	cutCounter = 0
+	for idx,instance in enumerate(dataset):
+		continuousToDiscrete(instance,featureMap)
+		if instance[featureMap['DEPARTURE_DELAY']] == 'delayed':
+			prunedDataset.append(instance)
+		elif cutCounter < 200:
+			prunedDataset.append(instance)
+			cutCounter += 1
 
-	for idx,row in enumerate(dataset):
-		continuousToDiscrete(row,featureMap)
+	random.shuffle(prunedDataset)
 
-		if (idx <= .8 * len(dataset)):
-			if (row[featureMap['DEPARTURE_DELAY']] == 'delayed'):
-				delayCount += 1
+	for idx,row in enumerate(prunedDataset):
+		if (idx <= .8 * len(prunedDataset)):
 			training_writer.writerow(row)
-		elif (idx <= .9 * len(dataset)):
+		elif (idx <= .9 * len(prunedDataset)):
 			validation_writer.writerow(row)
 		else:
 			test_writer.writerow(row)
 
 
-	print(delayCount)
 
 
 
