@@ -96,6 +96,16 @@ def continuousToDiscrete(row, featureMap):
 		newDestinationVisibility = 'high_visibility'
 	row[featureMap['DESTINATION_AVG_VISIBILITY']] = newDestinationVisibility
 
+	currentDepartureTime = int(row[featureMap['SCHEDULED_DEPARTURE']]) if row[featureMap['SCHEDULED_DEPARTURE']] != '' else '1200'
+	newDepartureTime = ''
+	if currentDepartureTime < 1200:
+		newDepartureTime = 'morning'
+	if currentDepartureTime >= 1200 and currentDepartureTime < 1800:
+		newDepartureTime = 'afternoon'
+	if currentDepartureTime >= 1800:
+		newDepartureTime = 'evening'
+	row[featureMap['SCHEDULED_DEPARTURE']] = newDepartureTime
+
 	currentDepartureDelay = int(row[featureMap['DEPARTURE_DELAY']]) if row[featureMap['DEPARTURE_DELAY']] != '' else 0
 	newDepartureDealy = ''
 	if currentDepartureDelay <= 15:
@@ -130,6 +140,8 @@ with open('Data/added_weather_fields.csv', 'r') as csvFile, open('Data/Training_
 
 	prunedDelayedDataset = []
 	prunedOnTimeDataset = []
+
+	print(sorted(featureMap.keys()))
 
 	cutCounter = 0
 	for idx,instance in enumerate(dataset):

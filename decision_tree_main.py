@@ -12,7 +12,7 @@ Take in data from csvfile and generate
 a list of dictionaries where each element 
 of the list represents an instance
 """
-def load_data(csvfile, features=['DEPARTURE_DELAY', 'ORIGIN_MIN_TEMPERATURE', 'MONTH', 'ORIGIN_SNOW_CM']):
+def load_data(csvfile, features=['AIRLINE', 'DAY_OF_WEEK', 'DEPARTURE_DELAY', 'DESTINATION_MIN_TEMPERATURE', 'DESTINATION_SNOW_CM', 'DISTANCE', 'MONTH', 'ORIGIN_AVG_VISIBILITY', 'ORIGIN_AVG_WIND', 'ORIGIN_MIN_TEMPERATURE', 'ORIGIN_SNOW_CM', 'SCHEDULED_DEPARTURE']):
   inputdataset = []
   unstructuredDataset = []
   with open(csvfile, newline='\n') as csvfile:
@@ -328,7 +328,7 @@ testSet = load_data(TEST_FILE)
 labelfeature = 'DEPARTURE_DELAY'
 labelmapping = {True: 'delayed', False: 'on_time'}
 
-"""
+
 # This commented code was created for running limited iterations of ID3 and pruning
 
 # Default 
@@ -340,10 +340,10 @@ maxdepth = 0
 
 for i in range(1, 17):
   maxdepth = maxdepth + 1
-  trainingSet = load_data("Congress Data - Training.csv")
+  trainingSet = load_data(TRAINING_FILE)
 
   # Train tree
-  newmodel = id3(trainingSet, labelfeature, 'democrat', 'republican', i)
+  newmodel = id3(trainingSet, labelfeature, 'delayed', 'on_time', i)
   
   # Stop training if stalled
   if newmodel == model:
@@ -354,9 +354,9 @@ for i in range(1, 17):
   
   print('\tTree trained on training dataset and depth {}:'.format(i))
 
-  trainingSet = load_data("Congress Data - Training.csv")
+  trainingSet = load_data(TRAINING_FILE)
   
-  validationSet = load_data("Congress Data - Validation.csv")
+  validationSet = load_data(VAILDATION_FILE)
 
   # Test on train
   correct = 0
@@ -387,18 +387,18 @@ print("Pruning model:")
 
 for i in range(1, maxdepth):
   print('\tPruning to depth {}'.format(i))
-  trainingSet = load_data("Congress Data - Training.csv")
+  trainingSet = load_data(TRAINING_FILE)
   
-  validationSet = load_data("Congress Data - Validation.csv")
+  validationSet = load_data(VAILDATION_FILE)
 
   # Train tree
-  model = reduced_error_prune(copy.deepcopy(finalmodel), trainingSet, validationSet, labelfeature, 'democrat', 'republican', i, labelmapping)
+  model = reduced_error_prune(copy.deepcopy(finalmodel), trainingSet, validationSet, labelfeature, 'delayed', 'on_time', i, labelmapping)
   
   print('\tPruned tree iteration {}:'.format(i))
 
-  trainingSet = load_data("Congress Data - Training.csv")
+  trainingSet = load_data(TRAINING_FILE)
   
-  validationSet = load_data("Congress Data - Validation.csv")
+  validationSet = load_data(VAILDATION_FILE)
 
   # Test on train
   accuracy =  accuracy_test(trainingSet, model, labelmapping)
@@ -409,9 +409,10 @@ for i in range(1, maxdepth):
   print('\t\tValidation Accuracy: {}'.format(accuracy))
 
 print(model)
-"""
+
 
 # Earlier code used pre-made 90/10 split
+"""
 fulldata = copy.deepcopy(trainingSet) + copy.deepcopy(validationSet)
 
 k = int(input('How many cross-validation folds?'))
@@ -488,3 +489,4 @@ print(best_tree)
 # Run test
 print("")
 print("Test set accuracy for best tree: {}".format( accuracy_test(testSet, best_tree, labelmapping)))
+"""
