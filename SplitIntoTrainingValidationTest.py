@@ -4,9 +4,9 @@ import random
 def continuousToDiscrete(row, featureMap):
 	currentDistance = int(row[featureMap['DISTANCE']])
 	newDistance = ''
-	if currentDistance <= 500:
+	if currentDistance <= 800:
 		newDistance = 'short'
-	if currentDistance > 500 and currentDistance <= 1500:
+	if currentDistance > 800 and currentDistance <= 1500:
 		newDistance = 'medium'
 	if currentDistance > 1500:
 		newDistance = 'long'
@@ -46,43 +46,43 @@ def continuousToDiscrete(row, featureMap):
 
 	currentOriginWind = float(row[featureMap['ORIGIN_AVG_WIND']])
 	newOriginWind = ''
-	if currentOriginWind <= 20:
+	if currentOriginWind <= 15:
 		newOriginWind = 'low_wind'
-	if currentOriginWind > 20:
+	if currentOriginWind > 15:
 		newOriginWind = 'high_wind'
 	row[featureMap['ORIGIN_AVG_WIND']] = newOriginWind
 
 	currentDestinationWind = float(row[featureMap['DESTINATION_AVG_WIND']])
 	newDestinationWind = ''
-	if currentDestinationWind <= 20:
+	if currentDestinationWind <= 15:
 		newDestinationWind = 'low_wind'
-	if currentDestinationWind > 20:
+	if currentDestinationWind > 15:
 		newDestinationWind = 'high_wind'
 	row[featureMap['DESTINATION_AVG_WIND']] = newDestinationWind
 
 	currentOriginSnow = float(row[featureMap['ORIGIN_SNOW_CM']])
 	newOriginSnow = ''
-	if currentOriginSnow <= 2.5:
+	if currentOriginSnow <=.5:
 		newOriginSnow = 'no_snow'
-	if currentOriginSnow > 2.5:
+	if currentOriginSnow > .5:
 		newOriginSnow = 'snow'
 	row[featureMap['ORIGIN_SNOW_CM']] = newOriginSnow
 
 	currentDestinationSnow = float(row[featureMap['DESTINATION_SNOW_CM']])
 	newDestinationSnow = ''
-	if currentDestinationSnow <= 2.5:
+	if currentDestinationSnow <= .5:
 		newDestinationSnow = 'no_snow'
-	if currentDestinationSnow > 2.5:
+	if currentDestinationSnow > .5:
 		newDestinationSnow = 'snow'
 	row[featureMap['DESTINATION_SNOW_CM']] = newDestinationSnow
 
 	currentOriginVisibility = float(row[featureMap['ORIGIN_AVG_VISIBILITY']])
 	newOriginVisibility = ''
-	if currentOriginVisibility <= 1:
+	if currentOriginVisibility <= 2:
 		newOriginVisibility = 'low_visibility'
-	if currentOriginVisibility > 1 and currentOriginVisibility <= 5:
+	if currentOriginVisibility > 2 and currentOriginVisibility <= 7:
 		newOriginVisibility = 'medium_visibility'
-	if currentOriginVisibility > 5:
+	if currentOriginVisibility > 7:
 		newOriginVisibility = 'high_visibility'
 	row[featureMap['ORIGIN_AVG_VISIBILITY']] = newOriginVisibility
 
