@@ -2,10 +2,51 @@ import csv
 import math
 import copy
 import random
+#import pandas as pd
+#from sklearn import tree
+
 
 TRAINING_FILE = 'Data/Training_Data.csv'
 VAILDATION_FILE = 'Data/Validation_Data.csv'
 TEST_FILE = 'Data/Test_Data.csv'
+
+#df = pd.read_csv(TRAINING_FILE)
+#
+#df.head()
+#
+#df_labels = df[['DEPARTURE_DELAY']].copy()
+#df_feats = df[['DESTINATION_MIN_TEMPERATURE', 'ORIGIN_AVG_VISIBILITY']].copy()
+#
+#df_feats['DESTINATION_MIN_TEMPERATURE'] = df_feats['DESTINATION_MIN_TEMPERATURE'].map({'freezing': 1, 'not_freezing': 0})
+#df_feats['ORIGIN_AVG_VISIBILITY'] = df_feats['ORIGIN_AVG_VISIBILITY'].map({'high_visibility': 1, 'medium_visibility': 0})
+#df_labels['DEPARTURE_DELAY'] = df_labels['DEPARTURE_DELAY'].map({'on_time': 1, 'delayed': 0})
+#
+#
+#clf = tree.DecisionTreeClassifier()
+#clf = clf.fit(df_feats, df_labels)
+#
+#df = pd.read_csv(TEST_FILE)
+#
+#df.head()
+#
+#df_labels = df[['DEPARTURE_DELAY']].copy()
+#df_feats = df[['DESTINATION_MIN_TEMPERATURE', 'ORIGIN_AVG_VISIBILITY']].copy()
+#
+#df_feats['DESTINATION_MIN_TEMPERATURE'] = df_feats['DESTINATION_MIN_TEMPERATURE'].map({'freezing': 1, 'not_freezing': 0})
+#df_feats['ORIGIN_AVG_VISIBILITY'] = df_feats['ORIGIN_AVG_VISIBILITY'].map({'high_visibility': 1, 'medium_visibility': 0})
+#df_labels['DEPARTURE_DELAY'] = df_labels['DEPARTURE_DELAY'].map({'on_time': 1, 'delayed': 0})
+#
+#res = clf.predict(df_feats)
+#
+#ind = 0
+#count_correct = 0
+#for x in df_labels['DEPARTURE_DELAY']:
+##    print(x)
+#    if x == res[ind]:
+#        count_correct = count_correct + 1
+#    ind = ind +1
+#print(count_correct/len(res))
+
 
 """
 Take in data from csvfile and generate 
