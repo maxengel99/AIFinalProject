@@ -12,6 +12,7 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import layers
 from keras.utils import to_categorical
+
 #y_binary 
 
 df = pd.read_csv('./Data/added_weather_fields.csv')[['DAY_OF_WEEK', 'MONTH', 'DAY', 'DISTANCE', 'ORIGIN_AVG_VISIBILITY', 'DESTINATION_AVG_VISIBILITY', 'DESTINATION_AVG_WIND', 'ORIGIN_AVG_WIND', 'DESTINATION_SNOW_CM', 'ORIGIN_SNOW_CM', 'DESTINATION_MIN_TEMPERATURE', 'ORIGIN_MIN_TEMPERATURE', 'DEPARTURE_DELAY']].copy()
@@ -34,19 +35,20 @@ for j, x in df.iterrows():
 
 #f_labels_bin = df_labels['DEPARTURE_DELAY'].map({'on_time': 1, 'delayed': 0})
 
-f_labels_bin = np.array([])
+input_array = []
 #
 counter = 0
 for x in f_feats_wout_missing_data['DEPARTURE_DELAY']:
     if x == 1:
-         f_labels_bin = np.concatenate((f_labels_bin, to_categorical(1)))
+        counter = counter + 1
+        input_array.append(to_categorical(1))
     else:
-         f_labels_bin = np.concatenate((f_labels_bin, to_categorical(0)))
-        
+        counter = counter + 1
+        input_array.append(to_categorical(0))
 
-f_feats_wout_missing_data = f_feats_wout_missing_data.drop(columns='DEPARTURE_DELAY')
+f_feats_wout_missing_data = np.array(f_feats_wout_missing_data.drop(columns='DEPARTURE_DELAY'))
 
-
+f_labels_bin = np.array(input_array)
 model = tf.keras.Sequential()
 # Adds a densely-connected layer with 64 units to the model:
 model.add(layers.Dense(64, activation='relu'))
@@ -81,7 +83,7 @@ layers.Dense(64, activation='relu'),
 layers.Dense(1, activation='softmax')])
 
 model.compile(optimizer=tf.train.AdamOptimizer(0.001),
-              loss='categorical_crossentropy',
+              loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
-model.fit(f_feats_wout_missing_data.values, f_labels_bin, epochs=10, batch_size=32)
+model.fit(f_feats_wout_missing_data.data, f_labels_bin, epochs=10, batch_size=32)
