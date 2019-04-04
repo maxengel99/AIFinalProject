@@ -94,7 +94,7 @@ layers.Dense(1, activation='softmax')])
 #opt = sgd(lr=0.01)
 #model.compile(loss = "categorical_crossentropy", optimizer = opt)
 
-model.compile( loss='binary_crossentropy', optimizer = 'sgd',
+model.compile(loss='binary_crossentropy', optimizer = 'sgd',
               metrics=['accuracy'])
 
 model.fit(f_feats_wout_missing_data, f_labels_bin, epochs=10, batch_size=60)
