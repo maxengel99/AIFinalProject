@@ -31,8 +31,8 @@ numpy.random.seed(seed)
 #dataset = numpy.loadtxt("Data/added_weather_fields.csv", delimiter=",", skiprows=1)
 print("Dataset Shape: " + str(dataset.shape))
 # split into input (X) and output (Y) variables
-X = dataset[:,0:36] #NEEDS TO BE ADJUSTED FOR WHICHEVER FEATURES WE USE
-Y = dataset[:,36]
+X = dataset[:,0:11] #NEEDS TO BE ADJUSTED FOR WHICHEVER FEATURES WE USE
+Y = dataset[:,12]
 
 print("Number of Samples: " + str(len(X)))
 print("Number of Features: " + str(len(X[0])))
@@ -50,7 +50,7 @@ print(len(Y_test))
 
 # create model
 model = Sequential()
-model.add(Dense(12, input_dim=36, init='uniform', activation='relu'))
+model.add(Dense(12, input_dim=11, init='uniform', activation='relu'))
 model.add(Dense(8, init='uniform', activation='relu'))
 model.add(Dense(1, init='uniform', activation='sigmoid'))
 
@@ -59,7 +59,8 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 model.fit(X_train, Y_train, nb_epoch=150, batch_size=10, verbose=0)
 scores = model.evaluate(X_train, Y_train)
-print(str(scores[0]))
+print(str(scores[0])) #loss
+print(str(scores[1])) #accuracy
 
 scores = model.evaluate(X_test, Y_test)
-print(str(scores[1]))
+print(str(scores[1])) #accuracy
