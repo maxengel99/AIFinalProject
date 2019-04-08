@@ -34,7 +34,7 @@ numpy.random.seed(seed)
 #dataset = numpy.loadtxt("Data/added_weather_fields.csv", delimiter=",", skiprows=1)
 print("Dataset Shape: " + str(dataset.shape))
 # split into input (X) and output (Y) variables
-X = dataset[:,0:11] #NEEDS TO BE ADJUSTED FOR WHICHEVER FEATURES WE USE
+X = dataset[:,0:12] #NEEDS TO BE ADJUSTED FOR WHICHEVER FEATURES WE USE
 Y = dataset[:,12]
 
 print("Number of Samples: " + str(len(X)))
@@ -51,8 +51,10 @@ print(len(Y_test))
 
 # create model
 model = Sequential()
-model.add(Dense(12, input_dim=11, init='uniform', activation='relu'))
-#model.add(Dense(8, init='uniform', activation='relu'))
+model.add(Dense(12, input_dim=12, init='uniform', activation='relu'))
+model.add(Dense(8, init='uniform', activation='relu'))
+model.add(Dense(8, init='uniform', activation='relu'))
+model.add(Dense(8, init='uniform', activation='relu'))
 model.add(Dense(1, init='uniform', activation='sigmoid'))
 
 # Compile model
