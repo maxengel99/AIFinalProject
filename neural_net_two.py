@@ -20,6 +20,9 @@ for j, x in df.iterrows(): #makes sure all rows have a number (some have NaN for
         else:
             x['DEPARTURE_DELAY'] = 0
         f_feats_wout_missing_data = f_feats_wout_missing_data.append(x)
+        
+f_feats_wout_missing_data = f_feats_wout_missing_data[['DAY', 'DAY_OF_WEEK',  'DESTINATION_AVG_VISIBILITY', 'DESTINATION_AVG_WIND',
+        'DESTINATION_MIN_TEMPERATURE', 'DESTINATION_SNOW_CM', 'DISTANCE', 'MONTH', 'ORIGIN_AVG_VISIBILITY', 'ORIGIN_AVG_WIND', 'ORIGIN_MIN_TEMPERATURE', 'ORIGIN_SNOW_CM', 'DEPARTURE_DELAY']]
 
 dataset = f_feats_wout_missing_data.values #changes pandas df to numpy matrix
 
