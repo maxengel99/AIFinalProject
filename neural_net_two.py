@@ -40,8 +40,6 @@ Y = dataset[:,12]
 print("Number of Samples: " + str(len(X)))
 print("Number of Features: " + str(len(X[0])))
 
-
-
 from sklearn.model_selection import train_test_split
 
 # Shuffle and split the dataset into the number of training and testing points above
@@ -54,7 +52,7 @@ print(len(Y_test))
 # create model
 model = Sequential()
 model.add(Dense(12, input_dim=11, init='uniform', activation='relu'))
-model.add(Dense(8, init='uniform', activation='relu'))
+#model.add(Dense(8, init='uniform', activation='relu'))
 model.add(Dense(1, init='uniform', activation='sigmoid'))
 
 # Compile model
