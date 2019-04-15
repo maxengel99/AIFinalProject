@@ -140,7 +140,7 @@ for instance in feature_values:
   day_of_week_arr.append(instance[1])
   airline_values_arr.append(instance[2])
   scheduled_departure_arr.append(instance[3])
-  distance_arr.append(instance[4])
+  distance_val_arr.append(instance[4])
   origin_min_temp_arr.append(instance[5])
   origin_avg_wind_arr.append(instance[6])
   origin_avg_visibility_arr.append(instance[7])
@@ -171,6 +171,7 @@ for x, item in enumerate(month_encoded):
   tmp_arr.append(origin_avg_visibility_encoded[x])
   tmp_arr.append(dest_min_temp_encoded[x])
   tmp_arr.append(dest_snow_encoded[x])
+  validation_values.append(tmp_arr)
 
 # validation_values = encode_features_and_create_test(validation_feature_values, le)
 correct = 0
