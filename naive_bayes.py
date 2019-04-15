@@ -52,7 +52,6 @@ def encode_features(values, le):
   origin_avg_visibility_arr = []
   origin_avg_wind_arr = []
   origin_min_temp_arr = []
-  origin_snow_arr = []
   scheduled_departure_arr = []
   distance_arr = []
 
@@ -67,12 +66,13 @@ def encode_features(values, le):
     origin_avg_visibility_arr.append(instance[7])
     dest_min_temp_arr.append(instance[8])
     dest_snow_arr.append(instance[9])
+  
 
   month_encoded = le.fit_transform(month_arr)
   day_of_week_encoded = le.fit_transform(day_of_week_arr)
   airline_encoded = le.fit_transform(airline_values_arr)
   scheduled_departure_encoded = le.fit_transform(scheduled_departure_arr)
-  distance_encoded = le.fit_transform(distance_val_arr)
+  distance_encoded = le.fit_transform(distance_arr)
   origin_min_temp_encoded = le.fit_transform(origin_min_temp_arr)
   origin_avg_wind_encoded = le.fit_transform(origin_avg_wind_arr)
   origin_avg_visibility_encoded = le.fit_transform(origin_avg_visibility_arr)
@@ -131,7 +131,6 @@ dest_snow_arr = []
 distance_val_arr = []
 origin_avg_visibility_arr = []
 origin_avg_wind_arr = []
-origin_snow_arr = []
 origin_min_temp_arr = []
 scheduled_departure_arr = []
 distance_arr = []
