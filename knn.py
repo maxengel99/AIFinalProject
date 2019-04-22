@@ -25,23 +25,23 @@ for j, x in df.iterrows():
             x['DEPARTURE_DELAY'] = 0
         f_feats_wout_missing_data = f_feats_wout_missing_data.append(x)
 
-input_array = []
-counter = 0
-for x in f_feats_wout_missing_data['DEPARTURE_DELAY']:
-    if x == 1:
-        counter = counter + 1
-        input_array.append([1]) #to categorical?
-    else:
-        counter = counter + 1
-        input_array.append([0])
-        
+#input_array = []
+#counter = 0
+#for x in f_feats_wout_missing_data['DEPARTURE_DELAY']:
+#    if x == 1:
+#        counter = counter + 1
+#        input_array.append([1]) #to categorical?
+#    else:
+#        counter = counter + 1
+#        input_array.append([0])
+#        
         
 #NEED SPLITTING OF TEST AND TRAINING
         
         
         
         
-input_array = np.array(input_array)
+input_array = np.array(f_feats_wout_missing_data['DEPARTURE_DELAY'])
 
 features = f_feats_wout_missing_data.drop(['DEPARTURE_DELAY'], 1)
 labels =  pd.DataFrame(input_array)
