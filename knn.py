@@ -8,7 +8,7 @@ Created on Sun Apr 21 21:40:27 2019
 import pandas as pd
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
-
+from sklearn.model_selection import train_test_split
 
 df = pd.read_csv('./Data/added_weather_fields.csv')[['DAY_OF_WEEK', 'MONTH', 'DAY', 'DISTANCE', 'ORIGIN_AVG_VISIBILITY', 'DESTINATION_AVG_VISIBILITY', 'DESTINATION_AVG_WIND', 'ORIGIN_AVG_WIND', 'DESTINATION_SNOW_CM', 'ORIGIN_SNOW_CM', 'DESTINATION_MIN_TEMPERATURE', 'ORIGIN_MIN_TEMPERATURE', 'DEPARTURE_DELAY']].copy()
 
@@ -38,18 +38,18 @@ for j, x in df.iterrows():
         
 #NEED SPLITTING OF TEST AND TRAINING
         
-        
-        
-        
-input_array = np.array(f_feats_wout_missing_data['DEPARTURE_DELAY'])
-
+labels = np.array(f_feats_wout_missing_data['DEPARTURE_DELAY'])
 features = f_feats_wout_missing_data.drop(['DEPARTURE_DELAY'], 1)
-labels =  pd.DataFrame(input_array)
+
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=1) 
+
+
+#labels =  pd.DataFrame(input_array)
 
 
 neigh = KNeighborsClassifier(n_neighbors=3)
-neigh.fit(features, input_array.ravel()) #need input_array as numpy array
-neigh.score(features, labels)
+neigh.fit(X_train, y_train.ravel()) #need input_array as numpy array
+neigh.score(X_test, y_test)
 
 
 
