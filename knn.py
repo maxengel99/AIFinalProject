@@ -24,14 +24,8 @@ for j, x in df.iterrows():
         else:
             x['DEPARTURE_DELAY'] = 0
         f_feats_wout_missing_data = f_feats_wout_missing_data.append(x)
-#        print('here', x)
-
-#f_labels = f_feats_wout_missing_data[['DEPARTURE_DELAY']].copy()
-
-#f_labels_bin = df_labels['DEPARTURE_DELAY'].map({'on_time': 1, 'delayed': 0})
 
 input_array = []
-#
 counter = 0
 for x in f_feats_wout_missing_data['DEPARTURE_DELAY']:
     if x == 1:
@@ -41,9 +35,15 @@ for x in f_feats_wout_missing_data['DEPARTURE_DELAY']:
         counter = counter + 1
         input_array.append([0])
         
+        
+#NEED SPLITTING OF TEST AND TRAINING
+
 
 features = f_feats_wout_missing_data.drop(['DEPARTURE_DELAY'], 1)
 labels =  pd.DataFrame(input_array)
+
+
+
 
 neigh = KNeighborsClassifier(n_neighbors=3)
 neigh.fit(features, labels)
