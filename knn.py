@@ -37,16 +37,18 @@ for x in f_feats_wout_missing_data['DEPARTURE_DELAY']:
         
         
 #NEED SPLITTING OF TEST AND TRAINING
-
+        
+        
+        
+        
+input_array = np.array(input_array)
 
 features = f_feats_wout_missing_data.drop(['DEPARTURE_DELAY'], 1)
 labels =  pd.DataFrame(input_array)
 
 
-
-
 neigh = KNeighborsClassifier(n_neighbors=3)
-neigh.fit(features, labels)
+neigh.fit(features, input_array.ravel()) #need input_array as numpy array
 neigh.score(features, labels)
 
 
