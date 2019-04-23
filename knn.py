@@ -10,13 +10,12 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 
-df = pd.read_csv('./Data/added_weather_fields.csv')[['DAY_OF_WEEK', 'MONTH', 'DAY', 'DISTANCE', 'ORIGIN_AVG_VISIBILITY', 'DESTINATION_AVG_VISIBILITY', 'DESTINATION_AVG_WIND', 'ORIGIN_AVG_WIND', 'DESTINATION_SNOW_CM', 'ORIGIN_SNOW_CM', 'DESTINATION_MIN_TEMPERATURE', 'ORIGIN_MIN_TEMPERATURE', 'DEPARTURE_DELAY']].copy()
-
+df = pd.read_csv('./Data/combined_5050.csv')[['MONTH', 'DAY_OF_WEEK', 'DISTANCE', "SCHEDULED_DEPARTURE", 'DEPARTURE_DELAY']].copy()
 f_feats_wout_missing_data = pd.DataFrame()
 for j, x in df.iterrows():
     flag =  True
     for y in x:
-        if not(isinstance(y, float)):
+        if not(isinstance(y, float) or not(isinstance(y, str))):
             flag = False
     if flag:
         if x['DEPARTURE_DELAY'] > 15:
@@ -47,11 +46,7 @@ X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=
 #labels =  pd.DataFrame(input_array)
 
 
-neigh = KNeighborsClassifier(n_neighbors=3)
+neigh = KNeighborsClassifier(n_neighbors=25)
 neigh.fit(X_train, y_train.ravel()) #need input_array as numpy array
-neigh.score(X_test, y_test)
-
-
-
-
-
+score = neigh.score(X_test, y_test)
+print(score)
