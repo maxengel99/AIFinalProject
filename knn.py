@@ -10,7 +10,10 @@ import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 
-df = pd.read_csv('./Data/combined_5050.csv')[['MONTH', 'DAY_OF_WEEK', 'DISTANCE', "SCHEDULED_DEPARTURE", 'DEPARTURE_DELAY']].copy()
+df = pd.read_csv('./Data/combined_5050.csv')[['MONTH', 'DAY_OF_WEEK', 'DISTANCE', "SCHEDULED_DEPARTURE", 
+"ORIGIN_MIN_TEMPERATURE", "ORIGIN_MAX_TEMPERATURE", "ORIGIN_SNOW_CM", "ORIGIN_AVG_WIND", "ORIGIN_AVG_VISIBILITY", 
+"DESTINATION_MIN_TEMPERATURE", "DESTINATION_MAX_TEMPERATURE", "DESTINATION_SNOW_CM", "DESTINATION_AVG_WIND", "DESTINATION_AVG_VISIBILITY", 'DEPARTURE_DELAY']].copy()
+
 f_feats_wout_missing_data = pd.DataFrame()
 for j, x in df.iterrows():
     flag =  True
